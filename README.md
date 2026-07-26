@@ -3,7 +3,7 @@
 
 <br/>
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-deelaka--ransilu.github.io-A3E635?style=for-the-badge&logo=github&logoColor=black)](https://deelakaransilu.me/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-deelakaransilu.me-A3E635?style=for-the-badge&logo=github&logoColor=black)](https://deelakaransilu.me/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-deelaka--ransilu-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/deelaka-ransilu)
 [![Email](https://img.shields.io/badge/Email-ransilu.deelaka@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ransilu.deelaka@gmail.com)
 
