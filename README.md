@@ -3,7 +3,7 @@
 
 <br/>
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-deelaka--ransilu.github.io-A3E635?style=for-the-badge&logo=github&logoColor=black)](https://deelaka-ransilu.github.io/portfolio)
+[![Portfolio](https://img.shields.io/badge/Portfolio-deelaka--ransilu.github.io-A3E635?style=for-the-badge&logo=github&logoColor=black)](https://deelakaransilu.me/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-deelaka--ransilu-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/deelaka-ransilu)
 [![Email](https://img.shields.io/badge/Email-ransilu.deelaka@gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:ransilu.deelaka@gmail.com)
 
@@ -17,7 +17,6 @@
 status:       Final Year @ University of Moratuwa (BIT)
 certified:    AWS Cloud Practitioner
 building:     BitPrep — Exam-Prep Platform for UOM BIT Students
-deployed:     Wedding RSVP Platform → hiruni-pramodh-rsvp.vercel.app
 learning:     Docker · Kubernetes (fundamentals) · Linux · Git · CI/CD
               Introduction to DevOps & SRE (Linux Foundation LFS162)
 open_to:      DevOps / Platform Engineering Internships · Freelance Full-Stack Work
@@ -59,17 +58,7 @@ open_to:      DevOps / Platform Engineering Internships · Freelance Full-Stack 
 |---|---|---|
 | [📚 BitPrep](https://github.com/deelaka-ransilu) | Next.js · TypeScript · Prisma · PostgreSQL | 🟢 Live |
 | [🛍️ Boutique Management System](https://github.com/deelaka-ransilu) | Spring Boot · Next.js · PostgreSQL · Docker | 🔨 In Progress |
-| [💍 Wedding RSVP Platform](https://hiruni-pramodh-rsvp.vercel.app) | Next.js · Supabase · Vercel · TypeScript | 🟢 Live |
 | [🌐 Portfolio](https://deelaka-ransilu.github.io/portfolio) | React · TypeScript · Vite · GitHub Pages | 🟢 Live |
-
----
-
-### 📊 GitHub Stats
-
-<div align="center">
-<img height="160" src="https://github-readme-stats.vercel.app/api?username=deelaka-ransilu&show_icons=true&theme=chartreuse-dark&hide_border=true&bg_color=0d0d0d&title_color=A3E635&icon_color=A3E635" />
-<img height="160" src="https://github-readme-stats.vercel.app/api/top-langs/?username=deelaka-ransilu&layout=compact&theme=chartreuse-dark&hide_border=true&bg_color=0d0d0d&title_color=A3E635" />
-</div>
 
 ---
 
