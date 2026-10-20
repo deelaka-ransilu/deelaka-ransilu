@@ -10,8 +10,6 @@
   <img alt="Contribution snake" src="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/output/github-snake.svg" />
 </picture>
 
-<br/><br/>
-
 [![BITprep](https://img.shields.io/badge/BITprep-bitprep.tech-A3E635?style=for-the-badge&logoColor=black)](https://bitprep.tech)
 
 </div>
