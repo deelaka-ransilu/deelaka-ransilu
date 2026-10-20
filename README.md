@@ -10,6 +10,11 @@
   <img alt="Contribution snake" src="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/output/github-snake.svg" />
 </picture>
 
+<br/>
+
 [![BITprep](https://img.shields.io/badge/BITprep-bitprep.tech-A3E635?style=for-the-badge&logoColor=black)](https://bitprep.tech)
 
 </div>
+
+<h3>Hey, I'm Dee</h3>
+<p>I build things and keep them running.</p>
