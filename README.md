@@ -12,6 +12,6 @@
 
 <br/><br/>
 
-(https://img.shields.io/badge/BITprep-bitprep.tech-A3E635?style=for-the-badge&logoColor=black)](https://bitprep.tech)
+[![BITprep](https://img.shields.io/badge/BITprep-bitprep.tech-A3E635?style=for-the-badge&logoColor=black)](https://bitprep.tech)
 
 </div>
