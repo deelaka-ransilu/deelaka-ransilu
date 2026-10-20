@@ -16,7 +16,7 @@
 ```yaml
 status:       Final Year @ University of Moratuwa (BIT)
 experience:   7 months L1/L2 production support (POS/ERP, SQL Server, SLA-driven)
-building:     BITprep, a quiz and study platform for UOM BIT students
+building:     BITprep, a quiz platform for UOM BIT students
 learning:     Linux · Docker · Kubernetes (kind) · Terraform · GitHub Actions
 training:     Introduction to DevOps & SRE (Linux Foundation LFS162, completed)
               AWS Cloud Practitioner Essentials (AWS Training course)
@@ -39,7 +39,6 @@ open_to:      Associate DevOps / Cloud / System Engineer and Production Support 
 
 **DevOps & Cloud (hands-on in labs)**
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
-![Podman](https://img.shields.io/badge/Podman-892CA0?style=flat-square&logo=podman&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes_(kind)-326CE5?style=flat-square&logo=kubernetes&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white)
@@ -60,13 +59,17 @@ open_to:      Associate DevOps / Cloud / System Engineer and Production Support 
 
 | Project | Stack | Status |
 |---|---|---|
-| [📚 BITprep](https://bitprep.tech) | Next.js · TypeScript · Prisma · Supabase · Vercel · Cloudflare | 🟢 Live |
-| [🧰 LFS162 DevOps & SRE Labs](https://github.com/deelaka-ransilu) | GCP VM · Ubuntu 24.04 · Docker · Podman · kind · Terraform | ✅ Completed |
-| [👰 Blanche Bridal](https://github.com/deelaka-ransilu) | Spring Boot 3 · Next.js · PostgreSQL · Flyway | 🔨 Final year project (not deployed) |
+| [📚 BITprep](https://bitprep.tech) | Next.js · TypeScript · Supabase · Vercel · Cloudflare | 🟢 Live |
+| 🧰 LFS162 DevOps & SRE Labs | GCP VM · Ubuntu 24.04 · Docker · Podman · kind · Terraform | ✅ Completed (repo coming) |
+| 👰 Blanche Bridal | Spring Boot 3 · Next.js · PostgreSQL · Flyway | 🔨 Final year project (not deployed) |
 | [🌐 Portfolio](https://deelakaransilu.me) | React · TypeScript · Vite · GitHub Actions · GitHub Pages | 🟢 Live |
 
 ---
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=13&pause=1000&color=555555&center=true&vCenter=true&width=500&lines=Always+learning.+Always+shipping.+%F0%9F%9A%80" alt="footer" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/output/github-snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/output/github-snake.svg" />
+    <img alt="Contribution snake" src="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/output/github-snake.svg" />
+  </picture>
 </div>
