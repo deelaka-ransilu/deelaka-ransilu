@@ -18,9 +18,9 @@
 
 I build things and keep them running. Passionate about DevOps, Cloud Infrastructure, and clean design.
 
-- 🔭 **Building:** [what you're working on right now]
-- 🌱 **Learning:** [one specific thing, e.g. Kubernetes, Terraform]
-- 💬 **Ask me about:** [Docker, CI/CD, UI/UX]
+- 🔭 **Building:** ops-toolkit, a collection of ops scripts and utilities
+- 🌱 **Learning:** Kubernetes and Terraform
+- 💬 **Ask me about:** Docker, CI/CD, UI/UX
 
 <br>
 
@@ -28,8 +28,7 @@ I build things and keep them running. Passionate about DevOps, Cloud Infrastruct
 
 ```
 NAME           STATUS           NOTES
-ops-toolkit    Up, building     [one line on what it does]
-bitprep        Up               [one line on what it does]
+ops-toolkit    Up, building     Ops scripts and utilities
 ```
 
 <br>
