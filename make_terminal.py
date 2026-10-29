@@ -24,10 +24,6 @@ INFO = [
     ("Arch", "Cloud Infrastructure"),
     ("Ops", "CI/CD, Terraform"),
     ("CPU", "Automation"),
-    ("Langs", "Python, TypeScript"),
-    ("Design", "UI/UX and Systems"),
-    ("Site", "deelakaransilu.me"),
-    ("Mail", "ransilu.deelaka@gmail.com"),
 ]
 
 # <--- YOUR PLAN GOES HERE
@@ -59,9 +55,10 @@ PX = 6                # size of one sea tile in px, so the scene is GRID*PX wide
 GAP = 1               # thin gap between sea tiles
 SWAY = 3.2            # seconds for one full tail swish (smaller = faster)
 TAIL_SWING = 10       # how far the tail end swings sideways, in whale pixels (bigger = more action)
+HEAD_SWING = 2        # how far the nose swings (0 = nose stays put)
 FLIPPER_SWING = 4     # how far the flipper tips sweep, in whale pixels (0 = flippers stay still)
-FLOW = 0.14           # seconds the water streaks take to drift down one tile (bigger = slower water)
-GLINT = 3.0           # seconds for one shimmer wave to sweep across the water
+FLOW = 0.03           # seconds the water streaks take to drift down one tile (bigger = slower water)
+GLINT = 1.2           # seconds for one shimmer wave to sweep across the water
 SNAP = True           # True = move in whole pixels (crisp pixel art), False = smooth glide
 
 # Sea map: '.' = normal tile, 'a' = faint streak tile, 'b' = bright streak tile.
@@ -197,6 +194,21 @@ def cursor(r, col, begin, blink=False):
                f'begin="{fmt(begin)}s" repeatCount="indefinite"/>')
     return el
 
+TYPE_SPEED = 0.014  # seconds per character when the neofetch info types out (smaller = faster)
+
+def typed_line(r, col, segments, begin):
+    """A line that types itself out character by character (no cursor)."""
+    n = sum(len(seg[0]) for seg in segments)
+    cid = f"ty{r}x{col}"
+    key_times = ";".join(fmt(i / n) for i in range(n))
+    widths = ";".join(fmt((i + 1) * CW) for i in range(n))
+    defs.append(
+        f'<clipPath id="{cid}"><rect x="{fmt(x_at(col))}" y="{y_at(r) - FONT - 2}" width="0" height="{LH + 4}">'
+        f'<animate attributeName="width" values="{widths}" calcMode="discrete" keyTimes="{key_times}" '
+        f'begin="{fmt(begin)}s" dur="{fmt(n * TYPE_SPEED)}s" fill="freeze"/></rect></clipPath>'
+    )
+    body.append(f'<text x="{fmt(x_at(col))}" y="{y_at(r)}" clip-path="url(#{cid})">{spans(segments)}</text>')
+
 def command(cmd, think=0.7):
     global row, t
     r, begin = row, t
@@ -251,11 +263,10 @@ def whale_mask():
     return [[inside((i + 0.5) * cell, (j + 0.5) * cell, poly) for i in range(80)] for j in range(80)]
 
 STEPS = 24                   # animation samples per swish
-LAG = 2.0                    # how much the tail trails the middle (makes the swish ripple)
-TAIL_START = 0.5             # the body is still from the nose down to here (0..1); only the back half moves
+LAG = 2.5                    # how much the tail trails the head (makes the swish ripple down the body)
 
 def keyframes(name, value_at):
-    frames = "".join(f"{fmt(i * 100 / STEPS)}%{{transform:translateX({fmt(value_at(i))}px)}}" for i in range(STEPS + 1))
+    frames = "".join(f"{fmt(i * 100 / STEPS)}%{{transform:{value_at(i)}}}" for i in range(STEPS + 1))
     css.append(f"@keyframes {name}{{{frames}}}")
 
 def whale(x0, y0, begin):
@@ -342,48 +353,52 @@ def whale(x0, y0, begin):
                 i += 1
         return out
 
-    def slices(mask, name, first, last, shift):
+    def slices(mask, name, first, last, shift, extra=None):
         """Rows first..last-1, two at a time. shift(row_centre, i) gives the sideways move at sample i,
         or shift is None for rows that stay still."""
         still, moving = [], []
         for g in range(first // 2, last // 2):
             rects = row_rects(mask, 2 * g) + row_rects(mask, 2 * g + 1)
+            if rects and extra:
+                rects += extra.get(2 * g, []) + extra.get(2 * g + 1, [])
             if not rects:
                 continue
             if shift is None:
                 still += rects
                 continue
             rc = 2 * g + 1
-            keyframes(f"{name}{g}", lambda i, rc=rc: snap(shift(rc, i)))
+            keyframes(f"{name}{g}", lambda i, rc=rc: f"translateX({fmt(snap(shift(rc, i)))}px)")
             moving.append(f'<g class="w" style="animation-name:{name}{g}">{"".join(rects)}</g>')
         return "".join(still) + "".join(moving)
 
-    # the back half of the body swishes: nothing moves above TAIL_START, then more and more towards the tail
-    def tail_shift(r, i):
-        t = max(0.0, (r / 80 - TAIL_START) / (1 - TAIL_START))
-        return TAIL_SWING * sub * t ** 1.5 * math.sin(2 * math.pi * i / STEPS - LAG * t)
-    cut = int(TAIL_START * 80) // 2 * 2
-    parts = [slices(body_mask, "b", 0, cut, None), slices(body_mask, "b", cut, 80, tail_shift)]
+    # the whole body swims: the nose swings a little, the tail swings a lot, and the wave ripples down
+    def body_shift(r, i):
+        u = r / 80
+        amp = (HEAD_SWING + (TAIL_SWING - HEAD_SWING) * u ** 1.5) * sub
+        return amp * math.sin(2 * math.pi * i / STEPS - LAG * u)
+    eyes = {er: [f'<rect x="{fmt(ec * sub)}" y="{fmt(er * sub)}" width="{fmt(sub)}" height="{fmt(sub)}" fill="{EYE}"/>'
+                 for (r2, ec) in EYE_CELLS if r2 == er] for (er, _) in EYE_CELLS}
+    parts = [slices(body_mask, "b", 0, 80, body_shift, eyes)]
 
-    # flippers paddle: the root stays on the body, the tip sweeps sideways
-    def flip_shift(sign):
-        def f(r, i):
-            reach = min(1.0, max(0.0, (r - 27) / 17.0))
-            return sign * FLIPPER_SWING * sub * reach * math.sin(2 * math.pi * i / STEPS + 1.0)
-        return f
-    parts.append(slices(fl_mask, "fl", 24, 48, flip_shift(1)))
-    parts.append(slices(fr_mask, "fr", 24, 48, flip_shift(1)))
-
-    # eyes stay with the head
-    for (er, ec) in EYE_CELLS:
-        parts.append(f'<rect x="{fmt(ec * sub)}" y="{fmt(er * sub)}" width="{fmt(sub)}" height="{fmt(sub)}" fill="{EYE}"/>')
+    # flippers ride on the body and also paddle: the root follows the body, the tip sweeps sideways
+    def flip_shift(r, i):
+        reach = min(1.0, max(0.0, (r - 27) / 17.0))
+        return body_shift(r, i) + FLIPPER_SWING * sub * reach * math.sin(2 * math.pi * i / STEPS + 1.0)
+    parts.append(slices(fl_mask, "fl", 24, 48, flip_shift))
+    parts.append(slices(fr_mask, "fr", 24, 48, flip_shift))
 
     # cargo: nine containers stay exactly where they are
     cargo = []
+    cx, cy = 627 * k, 471 * k          # centre of the cargo block; it moves and tilts about this point
+    rc = 471 / REF * 80
+    def ride(i):
+        slope = (body_shift(rc + 4, i) - body_shift(rc - 4, i)) / (8 * sub)
+        return f"translate({fmt(snap(body_shift(rc, i)))}px,0) rotate({fmt(math.degrees(math.atan(-slope)))}deg)"
+    keyframes("ride", ride)
     cw, ch = CONT_W * k, CONT_H * k
     for r, rowcols in enumerate(CONTAINERS):
         for c, colour in enumerate(rowcols):
-            x, y = BLOCK_COLS[c] * k, BLOCK_ROWS[r] * k
+            x, y = BLOCK_COLS[c] * k - cx, BLOCK_ROWS[r] * k - cy
             cargo.append(f'<rect x="{fmt(x)}" y="{fmt(y)}" width="{fmt(cw)}" height="{fmt(ch)}" '
                          f'rx="0.7" fill="{shade(colour, 0.55)}"/>')
             cargo.append(f'<rect x="{fmt(x + 0.6)}" y="{fmt(y + 0.6)}" width="{fmt(cw - 1.2)}" '
@@ -394,7 +409,7 @@ def whale(x0, y0, begin):
                              f'height="{fmt(ch - 3.2)}" fill="{shade(colour, 0.72)}"/>')
 
     # seaweed: each tuft waves on its own, a little out of step with the others
-    keyframes("sg", lambda i: 1.1 * math.sin(2 * math.pi * i / STEPS))
+    keyframes("sg", lambda i: f"translateX({fmt(1.1 * math.sin(2 * math.pi * i / STEPS))}px)")
     rnd = random.Random(3)
     greens = ["#2f9e44", "#1f7a35", "#62c554"]
     seed_px = 1.3
@@ -404,8 +419,8 @@ def whale(x0, y0, begin):
         for i in range(n):
             wob = round(1.6 * math.sin(i * 0.9 + sx)) * seed_px
             for extra in ((0,) if rnd.random() < 0.5 else (0, 1)):
-                tuft.append(f'<rect x="{fmt(sx * k + wob + extra * seed_px)}" '
-                            f'y="{fmt((st + sh) * k - i * seed_px)}" width="{seed_px}" height="{seed_px}" '
+                tuft.append(f'<rect x="{fmt(sx * k - cx + wob + extra * seed_px)}" '
+                            f'y="{fmt((st + sh) * k - cy - i * seed_px)}" width="{seed_px}" height="{seed_px}" '
                             f'fill="{rnd.choice(greens)}"/>')
         cargo.append(f'<g class="sg" style="animation-name:sg;animation-delay:-{fmt(n_tuft * 0.47)}s">{"".join(tuft)}</g>')
 
@@ -413,15 +428,16 @@ def whale(x0, y0, begin):
     body.append(
         f'<g transform="translate({fmt(x0)} {fmt(y0)})"><g clip-path="url(#logo)" visibility="hidden">'
         f'{"".join(sea)}'
-        f'<g filter="url(#glow)">{"".join(parts)}{"".join(cargo)}</g>'
+        f'<g filter="url(#glow)">{"".join(parts)}<g transform="translate({fmt(cx)} {fmt(cy)})">'
+        f'<g class="w" style="animation-name:ride">{"".join(cargo)}</g></g></g>'
         f'{show(begin)}</g></g>'
     )
 
-def output(rows, step=0.04):
+def output(rows, step=0.04, typing=False):
     global row, t
     for items in rows:
         for col, segs in items:
-            line(row, col, segs, t)
+            (typed_line if typing else line)(row, col, segs, t)
         row += 1
         t += step
     t += 0.5
@@ -434,15 +450,20 @@ info_rows = [
     [(USER, LOGO_COLOUR, True), ("@", "fg", False), (HOST, LOGO_COLOUR, True)],
     [("-" * len(f"{USER}@{HOST}"), "dim", False)],
 ] + [[(f"{k + ':':<8}", LOGO_COLOUR, True), (v, "fg", False)] for k, v in INFO]
-palette_row = len(info_rows) + 1
+logo_rows = -(-GRID * PX // LH)                     # rows the whale needs (rounded up)
+offset = max(0, (logo_rows - len(info_rows)) // 2)  # centre the info beside the whale
+block_rows = max(logo_rows, offset + len(info_rows))
+palette_row = block_rows + 1
 
-# info, a blank line, two rows of colour bar, a blank line
-rows = [[(INFO_COL, r)] for r in info_rows] + [[], [], [], []]
+# [info beside the whale], a blank line, two rows of colour bar, a blank line
+rows = ([[]] * offset + [[(INFO_COL, r)] for r in info_rows]
+        + [[]] * (block_rows - offset - len(info_rows)) + [[], [], [], []])
 
 block_top = y_at(row) - FONT
-whale(PAD_X, block_top + (len(info_rows) * LH - GRID * PX) / 2, t)
-palette_at, palette_begin = row + palette_row, t + palette_row * 0.04
-output(rows)
+whale(PAD_X, block_top + 8, t)
+INFO_STEP = 0.12
+palette_at, palette_begin = row + palette_row, t + len(info_rows) * INFO_STEP + 0.5
+output(rows, step=INFO_STEP, typing=True)
 
 swatches = "".join(
     f'<rect x="{fmt(x_at(INFO_COL + i * 3))}" y="{y_at(palette_at + k) - FONT + 1}" '
