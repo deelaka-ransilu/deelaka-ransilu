@@ -17,3 +17,29 @@
 ### Hey, I'm Deelaka 👋
 
 I build things and keep them running. Passionate about DevOps, Cloud Infrastructure, and clean design.
+
+- 🔭 **Building:** [what you're working on right now]
+- 🌱 **Learning:** [one specific thing, e.g. Kubernetes, Terraform]
+- 💬 **Ask me about:** [Docker, CI/CD, UI/UX]
+
+<br>
+
+### `$ docker ps`
+
+```
+NAME           STATUS           NOTES
+ops-toolkit    Up, building     [one line on what it does]
+bitprep        Up               [one line on what it does]
+```
+
+<br>
+
+### `$ cat ~/.stack`
+
+<img src="https://skillicons.dev/icons?i=docker,kubernetes,terraform,linux,py,ts,githubactions" alt="Tech stack" />
+
+<br>
+
+### `$ docker compose up -d`
+
+*keeps the pipelines green and the pixels sharp.*
