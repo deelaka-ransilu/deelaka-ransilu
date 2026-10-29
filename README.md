@@ -1,7 +1,7 @@
 <div align="center">
 
   <!-- THE ANIMATED TERMINAL -->
-  <img src="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/main/assets/terminal.svg?v=2" width="100%" alt="Deelaka's Terminal" />
+  <img src="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/main/assets/terminal.svg?v=3" width="100%" alt="Deelaka's Terminal" />
 
   <br>
 
@@ -33,3 +33,15 @@ ops-toolkit    Up, building     Ops scripts and utilities
 ### `$ cat ~/.stack`
 
 <img src="https://skillicons.dev/icons?i=docker,kubernetes,terraform,linux,py,ts,githubactions" alt="Tech stack" />
+
+<br>
+
+### `$ ./contributions --snake`
+
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/output/snake-dark.svg" />
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/output/snake.svg" />
+    <img alt="Contribution snake" src="https://raw.githubusercontent.com/deelaka-ransilu/deelaka-ransilu/output/snake.svg" width="100%" />
+  </picture>
+</div>
