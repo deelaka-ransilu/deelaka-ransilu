@@ -41,7 +41,7 @@ INFO = [
     ("Ops", "CI/CD, Terraform"),
     ("CPU", "Automation"),
     ("Design", "UI/UX and Systems"),
-    ("Mail", "your@email.com"), # Change to your real email
+    ("Mail", "ransilu.deelaka@gmail.com"), # Change to your real email
 ]
 
 # <--- YOUR PLAN GOES HERE
